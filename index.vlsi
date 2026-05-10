@@ -1,0 +1,161 @@
+# Design of a Basic ALU (Arithmetic Logic Unit)
+
+A **Basic ALU** performs arithmetic and logical operations on binary inputs.
+
+## Operations Supported
+
+1. Addition
+2. Subtraction
+3. AND
+4. OR
+5. NOT
+
+---
+
+# Block Diagram
+
+```text
+         A --------|
+                   |----> ALU -----> Result
+         B --------|
+
+             Select Lines
+                 S1 S0
+```
+
+* **A, B** → Input operands
+* **S1, S0** → Control/Selection lines
+* **Result** → Output
+
+---
+
+# Operation Table
+
+| S1 | S0 | Operation   |
+| -- | -- | ----------- |
+| 0  | 0  | Addition    |
+| 0  | 1  | Subtraction |
+| 1  | 0  | AND         |
+| 1  | 1  | OR          |
+
+For **NOT**, a separate control signal can invert input A.
+
+---
+
+# Arithmetic Operations
+
+## 1. Addition
+
+Uses a **Full Adder**.
+
+S = A + B
+
+### Truth Table
+
+| A | B | Sum | Carry |
+| - | - | --- | ----- |
+| 0 | 0 | 0   | 0     |
+| 0 | 1 | 1   | 0     |
+| 1 | 0 | 1   | 0     |
+| 1 | 1 | 0   | 1     |
+
+---
+
+## 2. Subtraction
+
+Implemented using **2’s complement** method.
+
+A - B = A + \overline{B} + 1
+
+* Invert B
+* Add 1
+* Use adder circuit
+
+---
+
+# Logical Operations
+
+## 3. AND Operation
+
+Y = A \cdot B
+
+| A | B | Y |
+| - | - | - |
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+---
+
+## 4. OR Operation
+
+Y = A + B
+
+| A | B | Y |
+| - | - | - |
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 1 |
+
+---
+
+## 5. NOT Operation
+
+Y = \overline{A}
+
+| A | Y |
+| - | - |
+| 0 | 1 |
+| 1 | 0 |
+
+---
+
+# Verilog HDL Code
+
+```verilog
+module basic_alu(
+    input [3:0] A,
+    input [3:0] B,
+    input [2:0] Sel,
+    output reg [3:0] Y
+);
+
+always @(*) begin
+    case(Sel)
+
+        3'b000: Y = A + B;      // Addition
+        3'b001: Y = A - B;      // Subtraction
+        3'b010: Y = A & B;      // AND
+        3'b011: Y = A | B;      // OR
+        3'b100: Y = ~A;         // NOT
+
+        default: Y = 4'b0000;
+
+    endcase
+end
+
+endmodule
+```
+
+---
+
+# Explanation
+
+* `Sel` decides which operation is performed.
+* `A + B` → Addition
+* `A - B` → Subtraction
+* `A & B` → Bitwise AND
+* `A | B` → Bitwise OR
+* `~A` → Bitwise NOT
+
+---
+
+# Applications of ALU
+
+* Microprocessors
+* Calculators
+* Digital Computers
+* Embedded Systems
+* DSP Systems
