@@ -37,3 +37,9 @@ The operation performed by the ALU is selected using control or selection lines.
 * To simulate and verify the output results.
 
 ---
+
+#output
+
+<img width="474" height="518" alt="Image" src="https://github.com/user-attachments/assets/98921069-2063-4e7c-bf81-18a781861c29" />
+
+<img width="645" height="356" alt="Image" src="https://github.com/user-attachments/assets/a1dab705-7e66-4468-b346-6d59fbfb24ad" />
