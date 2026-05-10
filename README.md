@@ -10,7 +10,7 @@
 
 *Duration*:6 weeks
 
-*Memtor*:Neela santosh
+*Mentor*:Neela santosh
 
 ### Description of the Task
 
