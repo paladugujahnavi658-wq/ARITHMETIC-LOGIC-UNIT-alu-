@@ -1,0 +1,192 @@
+# BASIC ALU – VERILOG CODE, TESTBENCH & SIMULATION REPORT
+
+## 1. Verilog Code for Basic ALU
+
+```verilog id="j5q8sj"
+module basic_alu (
+    input  [3:0] A,
+    input  [3:0] B,
+    input  [2:0] Sel,
+    output reg [3:0] Y
+);
+
+always @(*) begin
+    case(Sel)
+
+        3'b000: Y = A + B;   // Addition
+        3'b001: Y = A - B;   // Subtraction
+        3'b010: Y = A & B;   // AND
+        3'b011: Y = A | B;   // OR
+        3'b100: Y = ~A;      // NOT
+
+        default: Y = 4'b0000;
+
+    endcase
+end
+
+endmodule
+```
+
+---
+
+# 2. Testbench Code
+
+```verilog id="m3zt2r"
+`timescale 1ns / 1ps
+
+module basic_alu_tb;
+
+reg  [3:0] A;
+reg  [3:0] B;
+reg  [2:0] Sel;
+
+wire [3:0] Y;
+
+// Instantiate ALU
+basic_alu uut (
+    .A(A),
+    .B(B),
+    .Sel(Sel),
+    .Y(Y)
+);
+
+initial begin
+
+    // Monitor values
+    $monitor("Time=%0t Sel=%b A=%b B=%b Y=%b",
+              $time, Sel, A, B, Y);
+
+    // Test Addition
+    A = 4'b0101; B = 4'b0011; Sel = 3'b000;
+    #10;
+
+    // Test Subtraction
+    A = 4'b1000; B = 4'b0010; Sel = 3'b001;
+    #10;
+
+    // Test AND
+    A = 4'b1100; B = 4'b1010; Sel = 3'b010;
+    #10;
+
+    // Test OR
+    A = 4'b1100; B = 4'b1010; Sel = 3'b011;
+    #10;
+
+    // Test NOT
+    A = 4'b1010; Sel = 3'b100;
+    #10;
+
+    $finish;
+
+end
+
+endmodule
+```
+
+---
+
+# 3. Expected Simulation Output
+
+```text id="x7dn4w"
+Time=0   Sel=000 A=0101 B=0011 Y=1000
+Time=10  Sel=001 A=1000 B=0010 Y=0110
+Time=20  Sel=010 A=1100 B=1010 Y=1000
+Time=30  Sel=011 A=1100 B=1010 Y=1110
+Time=40  Sel=100 A=1010 B=1010 Y=0101
+```
+
+---
+
+# 4. Simulation Report
+
+## Title
+
+Simulation of Basic ALU Using Verilog HDL
+
+## Objective
+
+To design and simulate a Basic Arithmetic Logic Unit (ALU) capable of performing:
+
+* Addition
+* Subtraction
+* AND
+* OR
+* NOT operations
+
+---
+
+## Software Used
+
+* Xilinx Vivado / ModelSim / Quartus Prime
+
+---
+
+## Inputs and Outputs
+
+### Inputs
+
+* `A[3:0]` → 4-bit input
+* `B[3:0]` → 4-bit input
+* `Sel[2:0]` → Selection line
+
+### Output
+
+* `Y[3:0]` → Result output
+
+---
+
+## Operation Table
+
+| Sel | Operation   |
+| --- | ----------- |
+| 000 | Addition    |
+| 001 | Subtraction |
+| 010 | AND         |
+| 011 | OR          |
+| 100 | NOT         |
+
+---
+
+## Result Analysis
+
+### Addition
+
+Y = A + B
+
+Example:
+
+* A = 0101
+* B = 0011
+* Output = 1000
+
+---
+
+### Subtraction
+
+Y = A - B
+
+Example:
+
+* A = 1000
+* B = 0010
+* Output = 0110
+
+---
+
+### AND Operation
+
+Y = A \cdot B
+
+---
+
+### OR Operation
+
+Y = A + B
+
+---
+
+### NOT Operation
+
+Y = \overline{A}
+
+---
